@@ -2,9 +2,8 @@
 var restartLocal;
 var currentGame;
 var localCanvas = document.querySelector('#localCanvas');
+game_ui.registerCanvasForGame(localCanvas);
 
 restartLocal = function () {
-  var cv = localCanvas.getContext('2d');
-  currentGame = m_game.createNewChallenge(2,2);
-  drawGrid(cv, currentGame.grid);
+  game_ui.restartGame();
 };
