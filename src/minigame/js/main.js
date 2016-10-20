@@ -16,15 +16,15 @@ startButton.onclick = createConnection;
 sendButton.onclick = sendData;
 closeButton.onclick = closeDataChannels;
 
-function enableStartButton() {
+function enableStartButton () {
   startButton.disabled = false;
 }
 
-function disableSendButton() {
+function disableSendButton () {
   sendButton.disabled = true;
 }
 
-function createConnection() {
+function createConnection () {
   dataChannelSend.placeholder = '';
   var servers = null;
   pcConstraint = null;
@@ -34,11 +34,11 @@ function createConnection() {
   // Add localConnection to global scope to make it visible
   // from the browser console.
   window.localConnection = localConnection =
-      new RTCPeerConnection(servers, pcConstraint);
+    new RTCPeerConnection(servers, pcConstraint);
   trace('Created local peer connection object localConnection');
 
   sendChannel = localConnection.createDataChannel('sendDataChannel',
-      dataConstraint);
+    dataConstraint);
   trace('Created send data channel');
 
   localConnection.onicecandidate = iceCallback1;
@@ -48,7 +48,7 @@ function createConnection() {
   // Add remoteConnection to global scope to make it visible
   // from the browser console.
   window.remoteConnection = remoteConnection =
-      new RTCPeerConnection(servers, pcConstraint);
+    new RTCPeerConnection(servers, pcConstraint);
   trace('Created remote peer connection object remoteConnection');
 
   remoteConnection.onicecandidate = iceCallback2;
@@ -62,17 +62,17 @@ function createConnection() {
   closeButton.disabled = false;
 }
 
-function onCreateSessionDescriptionError(error) {
+function onCreateSessionDescriptionError (error) {
   trace('Failed to create session description: ' + error.toString());
 }
 
-function sendData() {
+function sendData () {
   var data = dataChannelSend.value;
   sendChannel.send(data);
   trace('Sent Data: ' + data);
 }
 
-function closeDataChannels() {
+function closeDataChannels () {
   trace('Closing data channels');
   sendChannel.close();
   trace('Closed data channel with label: ' + sendChannel.label);
@@ -93,7 +93,7 @@ function closeDataChannels() {
   enableStartButton();
 }
 
-function gotDescription1(desc) {
+function gotDescription1 (desc) {
   localConnection.setLocalDescription(desc);
   trace('Offer from localConnection \n' + desc.sdp);
   remoteConnection.setRemoteDescription(desc);
@@ -103,13 +103,13 @@ function gotDescription1(desc) {
   );
 }
 
-function gotDescription2(desc) {
+function gotDescription2 (desc) {
   remoteConnection.setLocalDescription(desc);
   trace('Answer from remoteConnection \n' + desc.sdp);
   localConnection.setRemoteDescription(desc);
 }
 
-function iceCallback1(event) {
+function iceCallback1 (event) {
   trace('local ice callback');
   if (event.candidate) {
     remoteConnection.addIceCandidate(
@@ -122,7 +122,7 @@ function iceCallback1(event) {
   }
 }
 
-function iceCallback2(event) {
+function iceCallback2 (event) {
   trace('remote ice callback');
   if (event.candidate) {
     localConnection.addIceCandidate(
@@ -135,15 +135,15 @@ function iceCallback2(event) {
   }
 }
 
-function onAddIceCandidateSuccess() {
+function onAddIceCandidateSuccess () {
   trace('AddIceCandidate success.');
 }
 
-function onAddIceCandidateError(error) {
+function onAddIceCandidateError (error) {
   trace('Failed to add Ice Candidate: ' + error.toString());
 }
 
-function receiveChannelCallback(event) {
+function receiveChannelCallback (event) {
   trace('Receive Channel Callback');
   receiveChannel = event.channel;
   receiveChannel.onmessage = onReceiveMessageCallback;
@@ -151,12 +151,12 @@ function receiveChannelCallback(event) {
   receiveChannel.onclose = onReceiveChannelStateChange;
 }
 
-function onReceiveMessageCallback(event) {
+function onReceiveMessageCallback (event) {
   trace('Received Message');
   dataChannelReceive.value = event.data;
 }
 
-function onSendChannelStateChange() {
+function onSendChannelStateChange () {
   var readyState = sendChannel.readyState;
   trace('Send channel state is: ' + readyState);
   if (readyState === 'open') {
@@ -171,13 +171,13 @@ function onSendChannelStateChange() {
   }
 }
 
-function onReceiveChannelStateChange() {
+function onReceiveChannelStateChange () {
   var readyState = receiveChannel.readyState;
   trace('Receive channel state is: ' + readyState);
 }
 
-function trace(text) {
-  if (text[text.length - 1] === '\n') {
+function trace (text) {
+  if (text[ text.length - 1 ] === '\n') {
     text = text.substring(0, text.length - 1);
   }
   if (window.performance) {

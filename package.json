@@ -1,0 +1,26 @@
+{
+  "name": "networking",
+  "version": "0.0.1",
+  "description": "network",
+  "main": "src/client.js",
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  },
+  "devDependencies": {
+    "budo": "^9.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "budo index.js --dir src/minigame --open --live=*.{html,css}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hdm-project/networking.git"
+  },
+  "author": "H3rby7",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hdm-project/networking/issues"
+  },
+  "homepage": "https://github.com/hdm-project/networking"
+}
