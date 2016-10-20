@@ -53,8 +53,14 @@ function Minigame () {
     initGrid();
 
     correctPosition = {
-      x: Math.round(Math.random() * dimensions.x),
-      y: Math.round(Math.random() * dimensions.y)
+      x: Math.floor(Math.random() * dimensions.x),
+      y: Math.floor(Math.random() * dimensions.y)
+    };
+
+    return {
+      grid: grid,
+      correct: correctPosition,
+      task: createSearchTextForTile(grid[ correctPosition.y ][ correctPosition.x ])
     };
 
     function initColors () {
@@ -102,9 +108,24 @@ function Minigame () {
       }
     }
 
-    return {
-      grid: grid,
-      correct: correctPosition
+    function createSearchTextForTile (tile) {
+      var fields, randomIndex, color, type;
+      fields = [ 'text', 'fontColor', 'backgroundColor' ];
+      randomIndex = Math.floor(Math.random() * fields.length);
+      switch (fields[ randomIndex ]) {
+        case 'text':
+          return 'Find the tile with the text: "' + tile.text.name + '"';
+          break;
+        case 'fontColor':
+          return 'Find the tile with the ' + tile.fontColor.name + ' text';
+          break;
+        case 'backgroundColor':
+          return 'Find the tile with the ' + tile.backgroundColor.name + ' background';
+          break;
+        default:
+          return 'Illegal Field';
+          break;
+      }
     }
 
   }

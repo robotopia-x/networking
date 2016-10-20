@@ -2,31 +2,34 @@
 var game_ui = {};
 
 (function () {
-  
+
   game_ui.drawGrid = drawGrid;
-  game_ui.registerCanvasForGame = registerCanvasForGame;
+  game_ui.registerCanvas = registerCanvas;
+  game_ui.registerTaskArea = registerTaskArea;
   game_ui.restartGame = restartGame;
-  
+  game_ui.canvas = null;
+  game_ui.game = null;
+  game_ui.tileSize = null;
+
   function drawGrid () {
-    var fullWidth, fullHeight, gridSize, tileSize, x, y, context, grid;
+    var fullWidth, fullHeight, gridSize, x, y, context, grid;
     context = game_ui.canvas.getContext('2d');
     grid = game_ui.game.grid;
     gridSize = {
-      x: grid[0].length,
+      x: grid[ 0 ].length,
       y: grid.length
     };
     fullWidth = context.canvas.width;
     fullHeight = context.canvas.height;
-    tileSize = {
+    game_ui.tileSize = {
       width: Math.round(fullWidth / gridSize.x),
-      height: Math.round(fullHeight / gridSize.y),
+      height: Math.round(fullHeight / gridSize.y)
     };
     context.clearRect(0, 0, fullWidth, fullHeight);
 
-
     for (x = 0; x < gridSize.x; x++) {
       for (y = 0; y < gridSize.y; y++) {
-        drawTile({x: x * tileSize.width, y: y * tileSize.height}, grid[y][x])
+        drawTile({ x: x * tileSize.width, y: y * tileSize.height }, grid[ y ][ x ])
       }
     }
 
@@ -40,15 +43,24 @@ var game_ui = {};
 
   }
 
-  function registerCanvasForGame (canvas) {
+  function registerTaskArea (span) {
+    game_ui.span = span;
+  }
+
+  function registerCanvas (canvas) {
     game_ui.canvas = canvas;
     game_ui.canvas.onclick = function (event) {
+      var x, y;
       console.log('Clicked: ' + event.offsetX + ', ' + event.offsetY);
+      x = event.offsetX;
+      y = event.offsetY;
+      //TODO: check for rect/tile, if is right.
     }
   }
 
   function restartGame () {
-    game_ui.game = m_game.createNewChallenge(2,2);
+    game_ui.game = m_game.createNewChallenge(2, 2);
+    game_ui.span.innerHTML = game_ui.game.task;
     drawGrid();
   }
 

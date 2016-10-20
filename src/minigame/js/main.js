@@ -1,8 +1,7 @@
 'use strict';
 var restartLocal;
-var currentGame;
-var localCanvas = document.querySelector('#localCanvas');
-game_ui.registerCanvasForGame(localCanvas);
+game_ui.registerCanvas(document.querySelector('#localCanvas'));
+game_ui.registerTaskArea(document.querySelector('#localTaskSpan'));
 
 restartLocal = function () {
   game_ui.restartGame();
