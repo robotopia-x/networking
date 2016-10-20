@@ -1,4 +1,11 @@
+# IntelliJ
 *.iml
 .idea/
+
+# npm
 node_modules/
+
+# bootstrap
+src/minigame/bootstrap/
+
 *.log
