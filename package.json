@@ -4,11 +4,19 @@
   "description": "network",
   "main": "src/client.js",
   "dependencies": {},
+  "standard": {
+    "ignore": [
+      "**/bootstrap/",
+      "adapter.js"
+    ]
+  },
   "devDependencies": {
-    "budo": "^9.2.1"
+    "budo": "^9.2.1",
+    "standard": "^8.5.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "standard": "standard",
     "start": "budo --dir src/minigame index.js --open --live=*.{html,css}"
   },
   "repository": {

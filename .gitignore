@@ -9,3 +9,4 @@ node_modules/
 src/minigame/bootstrap/
 
 *.log
+/src/minigame/js/lib/adapter.js

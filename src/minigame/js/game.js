@@ -1,30 +1,30 @@
-'use strict';
+'use strict'
 function Minigame () {
-  var game = {};
-  var colors, maxTiles, initialised;
+  var game = {}
+  var colors, maxTiles, initialised
 
-  initialised = false;
+  initialised = false
 
-  colors = [];
-  maxTiles = 0;
+  colors = []
+  maxTiles = 0
 
-  game.createNewChallenge = createNewChallenge;
+  game.createNewChallenge = createNewChallenge
 
   function createNewChallenge (dimX, dimY) {
-    init();
-    if (!( dimX > 0 && dimY > 0)) {
-      return null;
+    init()
+    if (!(dimX > 0 && dimY > 0)) {
+      return null
     }
     if (dimX * dimY > maxTiles) {
-      return new TileGrid({ x: 1, y: 1 });
+      return new TileGrid({ x: 1, y: 1 })
     }
-    return new TileGrid({ x: dimX, y: dimY });
+    return new TileGrid({ x: dimX, y: dimY })
   }
 
   function addColor (color) {
     if (color) {
-      colors.push(color);
-      maxTiles = colors.length;
+      colors.push(color)
+      maxTiles = colors.length
     }
   }
 
@@ -34,100 +34,98 @@ function Minigame () {
       font: hexText,
       background: hexBackground,
       equals: equals
-    };
-
-    function equals (otherColor) {
-      return color.name === otherColor.name;
     }
 
-    return color;
+    function equals (otherColor) {
+      return color.name === otherColor.name
+    }
+
+    return color
   }
 
   function TileGrid (dimensions) {
-    var grid, correctPosition, usableColors;
-    grid = [];
-    usableColors = {};
+    var grid, correctPosition, usableColors
+    grid = []
+    usableColors = {}
 
-    initColors();
+    initColors()
 
-    initGrid();
+    initGrid()
 
     correctPosition = {
       x: Math.floor(Math.random() * dimensions.x),
       y: Math.floor(Math.random() * dimensions.y)
-    };
+    }
 
     return {
       grid: grid,
       correct: correctPosition,
       task: createSearchTextForTile(grid[ correctPosition.y ][ correctPosition.x ])
-    };
+    }
 
     function initColors () {
-      var allColors, i, required;
+      var allColors, i, required
 
-      usableColors.all = [];
+      usableColors.all = []
 
-      required = dimensions.x * dimensions.y;
+      required = dimensions.x * dimensions.y
 
-      allColors = colors.slice();
+      allColors = colors.slice()
 
       for (i = 0; i < required; i++) {
-        var randomIndex = Math.floor(Math.random() * allColors.length);
-        usableColors.all.push(allColors[ randomIndex ]);
-        allColors.splice(randomIndex, 1);
+        var randomIndex = Math.floor(Math.random() * allColors.length)
+        usableColors.all.push(allColors[ randomIndex ])
+        allColors.splice(randomIndex, 1)
       }
 
-      usableColors.text = usableColors.all.slice();
-      usableColors.font = usableColors.all.slice();
-      usableColors.background = usableColors.all.slice();
-
+      usableColors.text = usableColors.all.slice()
+      usableColors.font = usableColors.all.slice()
+      usableColors.background = usableColors.all.slice()
     }
 
     function initGrid () {
-      var i, j;
+      var i, j
       for (i = 0; i < dimensions.x; i++) {
-        var row = [];
+        var row = []
         for (j = 0; j < dimensions.x; j++) {
-          var textColor, fontColor, bgColor, randomIndex;
-          //text
-          randomIndex = Math.floor(Math.random() * usableColors.text.length);
-          textColor = usableColors.text[ randomIndex ];
-          usableColors.text.splice(randomIndex, 1);
-          //font
-          randomIndex = Math.floor(Math.random() * usableColors.font.length);
-          fontColor = usableColors.font[ randomIndex ];
-          usableColors.font.splice(randomIndex, 1);
-          //background
-          randomIndex = Math.floor(Math.random() * usableColors.background.length);
-          bgColor = usableColors.background[ randomIndex ];
-          usableColors.background.splice(randomIndex, 1);
-          row.push(new Tile(textColor, fontColor, bgColor));
+          var textColor, fontColor, bgColor, randomIndex
+          // text
+          randomIndex = Math.floor(Math.random() * usableColors.text.length)
+          textColor = usableColors.text[ randomIndex ]
+          usableColors.text.splice(randomIndex, 1)
+          // font
+          randomIndex = Math.floor(Math.random() * usableColors.font.length)
+          fontColor = usableColors.font[ randomIndex ]
+          usableColors.font.splice(randomIndex, 1)
+          // background
+          randomIndex = Math.floor(Math.random() * usableColors.background.length)
+          bgColor = usableColors.background[ randomIndex ]
+          usableColors.background.splice(randomIndex, 1)
+          row.push(new Tile(textColor, fontColor, bgColor))
         }
-        grid.push(row);
+        grid.push(row)
       }
     }
 
     function createSearchTextForTile (tile) {
-      var fields, randomIndex, color, type;
-      fields = [ 'text', 'fontColor', 'backgroundColor' ];
-      randomIndex = Math.floor(Math.random() * fields.length);
+      var fields, randomIndex, color, type
+      fields = [ 'text', 'fontColor', 'backgroundColor' ]
+      randomIndex = Math.floor(Math.random() * fields.length)
       switch (fields[ randomIndex ]) {
         case 'text':
-          return 'Find the tile with the text: "' + tile.text.name + '"';
-          break;
+          return 'Find the tile with the text: "' + tile.text.name + '"'
+          break
         case 'fontColor':
-          return 'Find the tile with the ' + tile.fontColor.name + ' text';
-          break;
+          return 'Find the tile with the ' + tile.fontColor.name + ' text'
+          break
         case 'backgroundColor':
-          return 'Find the tile with the ' + tile.backgroundColor.name + ' background';
-          break;
+          return 'Find the tile with the ' + tile.backgroundColor.name + ' background'
+          break
         default:
-          return 'Illegal Field';
-          break;
+          return 'Illegal Field'
+          break
       }
     }
-
   }
 
   function Tile (text, textColor, backgroundColor) {
@@ -136,41 +134,41 @@ function Minigame () {
       fontColor: textColor,
       backgroundColor: backgroundColor,
       equals: equals
-    };
+    }
 
     function equals (otherTile) {
       if (!(otherTile.hasOwnProperty('text') && otherTile.hasOwnProperty('fontColor') && otherTile.hasOwnProperty('backgroundColor'))) {
-        return false;
+        return false
       }
       if (otherTile.text.equals(tile.text)) {
-        return false;
+        return false
       }
       if (otherTile.fontColor.equals(tile.fontColor)) {
-        return false;
+        return false
       }
       if (otherTile.backgroundColor.equals(tile.backgroundColor)) {
-        return false;
+        return false
       }
-      return true;
+      return true
     }
 
-    return tile;
+    return tile
   }
 
   function init () {
     if (initialised) {
       return
     }
-    initialised = true;
-    addColor(new Color('Red', '#FF0000', '#CC0000'));
-    addColor(new Color('Green', '#00FF00', '#00CC00'));
-    addColor(new Color('Blue', '#0000FF', '#0000CC'));
-    addColor(new Color('Yellow', '#FFFF00', '#CCCC00'));
-    addColor(new Color('Pink', '#FF00FF', '#CC00CC'));
-    addColor(new Color('Teal', '#00FFFF', '#00CCCC'));
+    initialised = true
+    addColor(new Color('Red', '#FF0000', '#CC0000'))
+    addColor(new Color('Green', '#00FF00', '#00CC00'))
+    addColor(new Color('Blue', '#0000FF', '#0000CC'))
+    addColor(new Color('Yellow', '#FFFF00', '#CCCC00'))
+    addColor(new Color('Pink', '#FF00FF', '#CC00CC'))
+    addColor(new Color('Teal', '#00FFFF', '#00CCCC'))
   }
 
-  return game;
+  return game
 }
 
-var m_game = new Minigame();
+var m_game = new Minigame()
