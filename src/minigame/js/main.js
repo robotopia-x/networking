@@ -2,11 +2,13 @@
 var restartLocal
 var restartRemote
 
-var game_Local = new CreateGameUI()
+(function () {
+  var game_Local = new CreateGameUI()
 
-game_Local.registerCanvas(document.querySelector('#localCanvas'))
-game_Local.registerTaskArea(document.querySelector('#localTaskSpan'))
+  game_Local.registerCanvas(document.querySelector('#localCanvas'))
+  game_Local.registerTaskArea(document.querySelector('#localTaskSpan'))
 
-restartLocal = function () {
-  game_Local.restartGame()
-}
+  restartLocal = function () {
+    game_Local.createNewGame()
+  }
+})();

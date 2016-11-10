@@ -119,13 +119,17 @@ var miniGame
     function handleInput(posX, posY) {
       if (correctPosition.x === posX && correctPosition.y === posY) {
         stopTime = Date.now()
-        console.log("correct after " + (stopTime - startTime) + " ms and " + mistakes + " mistakes; Adding a penalty of " + (mistakes * config.penalty) + "ms.")
+        createChallengeResult(this, stopTime - startTime, mistakes)
         return true
       } else {
         mistakes++
         return false
       }
     }
+  }
+
+  function createChallengeResult(challenge, solvingTime, mistakes) {
+    console.log("correct after " + solvingTime + " ms and " + mistakes + " mistakes; Adding a penalty of " + (mistakes * config.penalty) + "ms.")
   }
 
   function Tile (text, textColor, backgroundColor) {

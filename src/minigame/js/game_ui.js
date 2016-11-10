@@ -4,7 +4,8 @@ function CreateGameUI() {
   game_ui.drawGrid = drawGrid
   game_ui.registerCanvas = registerCanvas
   game_ui.registerTaskArea = registerTaskArea
-  game_ui.restartGame = restartGame
+  game_ui.createNewGame = createNewGame
+  game_ui.loadGame = loadGame
   var canvas = null
   var game = null
   var tileSize = null
@@ -60,13 +61,22 @@ function CreateGameUI() {
       y = Math.floor(event.offsetY / hitboxForTiles.y)
       console.log('Clicked tile: X=' + x + ', Y=' + y)
       if (game.handleInput(x, y)) {
-        restartGame();
+        createNewGame();
       }
     }
   }
 
-  function restartGame () {
+  function loadGame (input) {
+    game = input;
+    startGame()
+  }
+
+  function createNewGame () {
     game = miniGame.createNewChallenge(2, 2)
+    startGame()
+  }
+
+  function startGame () {
     game_ui.span.innerHTML = game.task
     drawGrid()
   }
