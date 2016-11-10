@@ -9,6 +9,11 @@ body {
   margin: 30px;
 }
 
-.row > .split_side {
+.row {
+  width: 100%;
+}
+
+.split_side {
   border-right: 3px solid #DDDDDD;
+  width: 50%;
 }

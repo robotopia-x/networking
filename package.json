@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "network",
   "main": "src/client.js",
-  "dependencies": {},
+  "dependencies": {
+    "budo": "^9.2.1"
+  },
   "standard": {
     "ignore": [
       "**/bootstrap/",
@@ -12,6 +14,7 @@
   },
   "devDependencies": {
     "budo": "^9.2.1",
+    "parse-args": "^0.1.0",
     "standard": "^8.5.0"
   },
   "scripts": {
