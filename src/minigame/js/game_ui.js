@@ -4,12 +4,14 @@ function CreateGameUI() {
   game_ui.drawGrid = drawGrid
   game_ui.registerCanvas = registerCanvas
   game_ui.registerTaskArea = registerTaskArea
-  game_ui.createNewGame = createNewGame
-  game_ui.loadGame = loadGame
+  game_ui.createNewGame = createNewChallenge
+  game_ui.loadGame = loadChallenge
+  game_ui.onFinish = onFinish
   var canvas = null
   var game = null
   var tileSize = null
   var gridSize = {}
+  var handlerFunction
 
   function drawGrid () {
     var fullWidth, fullHeight, x, y, context, grid
@@ -61,23 +63,31 @@ function CreateGameUI() {
       y = Math.floor(event.offsetY / hitboxForTiles.y)
       console.log('Clicked tile: X=' + x + ', Y=' + y)
       if (game.handleInput(x, y)) {
-        createNewGame();
+        createNewChallenge();
       }
     }
   }
 
-  function loadGame (input) {
-    game = input;
+  function onFinish(handler) {
+    handlerFunction = handler
+    if (game) {
+      game.onFinish(handlerFunction)
+    }
+  }
+  
+  function loadChallenge (input) {
+    game = input.challenge
     startGame()
   }
 
-  function createNewGame () {
+  function createNewChallenge () {
     game = miniGame.createNewChallenge(2, 2)
     startGame()
   }
 
   function startGame () {
     game_ui.span.innerHTML = game.task
+    game.onFinish(handlerFunction)
     drawGrid()
   }
 

@@ -3,21 +3,18 @@ var miniGame
 
 (function Minigame () {
   var game = {}
-  var colors, maxTiles, initialised, config
+  var colors, maxTiles, config
 
   config = {
     penalty: 2000
   }
 
-  initialised = false
-
   colors = []
   maxTiles = 0
 
   game.createNewChallenge = createNewChallenge
-
+  
   function createNewChallenge (dimX, dimY) {
-    init()
     if (!(dimX > 0 && dimY > 0)) {
       return null
     }
@@ -50,7 +47,7 @@ var miniGame
   }
 
   function Challenge (dimensions) {
-    var grid, correctPosition, usableColors, startTime, stopTime, mistakes
+    var grid, correctPosition, usableColors, startTime, stopTime, mistakes, finishHandler
     mistakes = 0
     grid = []
     usableColors = {}
@@ -69,7 +66,8 @@ var miniGame
     return {
       grid: grid,
       handleInput: handleInput,
-      task: createSearchTextForTile(grid[ correctPosition.y ][ correctPosition.x ])
+      task: createSearchTextForTile(grid[ correctPosition.y ][ correctPosition.x ]),
+      onFinish: onFinish
     }
 
     function initColors () {
@@ -119,17 +117,27 @@ var miniGame
     function handleInput(posX, posY) {
       if (correctPosition.x === posX && correctPosition.y === posY) {
         stopTime = Date.now()
-        createChallengeResult(this, stopTime - startTime, mistakes)
+        publishChallengeResult(this, stopTime - startTime, mistakes, finishHandler)
         return true
       } else {
         mistakes++
         return false
       }
     }
+
+    function onFinish(handler) {
+      finishHandler = handler
+    }
   }
 
-  function createChallengeResult(challenge, solvingTime, mistakes) {
+  function publishChallengeResult(challenge, solvingTime, mistakes, callback) {
     console.log("correct after " + solvingTime + " ms and " + mistakes + " mistakes; Adding a penalty of " + (mistakes * config.penalty) + "ms.")
+    var result = {
+      challenge: challenge,
+      time: solvingTime,
+      mistakes: mistakes
+    }
+    callback(result)
   }
 
   function Tile (text, textColor, backgroundColor) {
@@ -180,10 +188,6 @@ var miniGame
   }
 
   function init () {
-    if (initialised) {
-      return
-    }
-    initialised = true
     addColor(new Color('Red', '#FF0000', '#CC0000'))
     addColor(new Color('Green', '#00FF00', '#00CC00'))
     addColor(new Color('Blue', '#0000FF', '#0000CC'))
@@ -191,6 +195,8 @@ var miniGame
     addColor(new Color('Pink', '#FF00FF', '#CC00CC'))
     addColor(new Color('Teal', '#00FFFF', '#00CCCC'))
   }
+
+  init();
 
   miniGame = game
 })();
