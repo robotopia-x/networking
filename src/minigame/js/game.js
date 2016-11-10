@@ -1,7 +1,13 @@
 'use strict'
-function Minigame () {
+var miniGame
+
+(function Minigame () {
   var game = {}
-  var colors, maxTiles, initialised
+  var colors, maxTiles, initialised, config
+
+  config = {
+    penalty: 2000
+  }
 
   initialised = false
 
@@ -16,9 +22,9 @@ function Minigame () {
       return null
     }
     if (dimX * dimY > maxTiles) {
-      return new TileGrid({ x: 1, y: 1 })
+      return new Challenge({ x: 1, y: 1 })
     }
-    return new TileGrid({ x: dimX, y: dimY })
+    return new Challenge({ x: dimX, y: dimY })
   }
 
   function addColor (color) {
@@ -43,8 +49,9 @@ function Minigame () {
     return color
   }
 
-  function TileGrid (dimensions) {
-    var grid, correctPosition, usableColors
+  function Challenge (dimensions) {
+    var grid, correctPosition, usableColors, startTime, stopTime, mistakes
+    mistakes = 0
     grid = []
     usableColors = {}
 
@@ -57,9 +64,11 @@ function Minigame () {
       y: Math.floor(Math.random() * dimensions.y)
     }
 
+    startTime = Date.now();
+
     return {
       grid: grid,
-      correct: correctPosition,
+      handleInput: handleInput,
       task: createSearchTextForTile(grid[ correctPosition.y ][ correctPosition.x ])
     }
 
@@ -107,23 +116,14 @@ function Minigame () {
       }
     }
 
-    function createSearchTextForTile (tile) {
-      var fields, randomIndex, color, type
-      fields = [ 'text', 'fontColor', 'backgroundColor' ]
-      randomIndex = Math.floor(Math.random() * fields.length)
-      switch (fields[ randomIndex ]) {
-        case 'text':
-          return 'Find the tile with the text: "' + tile.text.name + '"'
-          break
-        case 'fontColor':
-          return 'Find the tile with the ' + tile.fontColor.name + ' text'
-          break
-        case 'backgroundColor':
-          return 'Find the tile with the ' + tile.backgroundColor.name + ' background'
-          break
-        default:
-          return 'Illegal Field'
-          break
+    function handleInput(posX, posY) {
+      if (correctPosition.x === posX && correctPosition.y === posY) {
+        stopTime = Date.now()
+        console.log("correct after " + (stopTime - startTime) + " ms and " + mistakes + " mistakes; Adding a penalty of " + (mistakes * config.penalty) + "ms.")
+        return true
+      } else {
+        mistakes++
+        return false
       }
     }
   }
@@ -155,6 +155,26 @@ function Minigame () {
     return tile
   }
 
+  function createSearchTextForTile (tile) {
+    var fields, randomIndex, color, type
+    fields = [ 'text', 'fontColor', 'backgroundColor' ]
+    randomIndex = Math.floor(Math.random() * fields.length)
+    switch (fields[ randomIndex ]) {
+      case 'text':
+        return 'Find the tile with the text: "' + tile.text.name + '"'
+        break
+      case 'fontColor':
+        return 'Find the tile with the ' + tile.fontColor.name + ' text'
+        break
+      case 'backgroundColor':
+        return 'Find the tile with the ' + tile.backgroundColor.name + ' background'
+        break
+      default:
+        return 'Illegal Field'
+        break
+    }
+  }
+
   function init () {
     if (initialised) {
       return
@@ -168,7 +188,5 @@ function Minigame () {
     addColor(new Color('Teal', '#00FFFF', '#00CCCC'))
   }
 
-  return game
-}
-
-var m_game = new Minigame()
+  miniGame = game
+})();

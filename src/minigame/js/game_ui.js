@@ -1,7 +1,6 @@
 'use strict'
-var game_ui = {};
-
-(function () {
+function CreateGameUI() {
+  var game_ui = {}
   game_ui.drawGrid = drawGrid
   game_ui.registerCanvas = registerCanvas
   game_ui.registerTaskArea = registerTaskArea
@@ -10,12 +9,6 @@ var game_ui = {};
   var game = null
   var tileSize = null
   var gridSize = {}
-
-  var config = {
-    penalty: 2000
-  }
-
-  var timeStamps = {}
 
   function drawGrid () {
     var fullWidth, fullHeight, x, y, context, grid
@@ -66,31 +59,18 @@ var game_ui = {};
       x = Math.floor(event.offsetX / hitboxForTiles.x)
       y = Math.floor(event.offsetY / hitboxForTiles.y)
       console.log('Clicked tile: X=' + x + ', Y=' + y)
-      // TODO: check for rect/tile, if is right.
-      if (game.correct.x === x && game.correct.y === y) {
-        handleCorrect()
-      } else {
-        handleMistake()
+      if (game.handleInput(x, y)) {
+        restartGame();
       }
     }
   }
 
-  function handleMistake() {
-    timeStamps.start = timeStamps.start - config.penalty
-  }
-
-  function handleCorrect() {
-    timeStamps.end = Date.now()
-    console.log("correct after " + (timeStamps.end - timeStamps.start) + " ms")
-    restartGame()
-  }
-
   function restartGame () {
-    game = m_game.createNewChallenge(2, 2)
+    game = miniGame.createNewChallenge(2, 2)
     game_ui.span.innerHTML = game.task
     drawGrid()
-    timeStamps.start = Date.now()
   }
 
+  return game_ui;
 
-})()
+}

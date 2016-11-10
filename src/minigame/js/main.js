@@ -1,8 +1,12 @@
 'use strict'
 var restartLocal
-game_ui.registerCanvas(document.querySelector('#localCanvas'))
-game_ui.registerTaskArea(document.querySelector('#localTaskSpan'))
+var restartRemote
+
+var game_Local = new CreateGameUI()
+
+game_Local.registerCanvas(document.querySelector('#localCanvas'))
+game_Local.registerTaskArea(document.querySelector('#localTaskSpan'))
 
 restartLocal = function () {
-  game_ui.restartGame()
+  game_Local.restartGame()
 }
