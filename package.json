@@ -4,7 +4,10 @@
   "description": "network",
   "main": "src/client.js",
   "dependencies": {
-    "budo": "^9.2.1"
+    "budo": "^9.2.1",
+    "choo": "^3.3.0",
+    "sheetify": "^6.0.1",
+    "simple-peer": "^6.0.7"
   },
   "standard": {
     "ignore": [
@@ -14,13 +17,12 @@
   },
   "devDependencies": {
     "budo": "^9.2.1",
-    "parse-args": "^0.1.0",
     "standard": "^8.5.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "standard": "standard",
-    "start": "budo --dir src/minigame index.js --open --live=*.{html,css}"
+    "start": "budo index.js -P --live=*.{html,css}"
   },
   "repository": {
     "type": "git",
