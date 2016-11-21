@@ -13,6 +13,6 @@ function newGame(_, __, send, done) {
 
 function guessTile(data, state, send, done) {
   if (state.game.handleInput(data)) {
-    newGame(null, null, send, done)
+    //newGame(null, null, send, done)
   }
 }
