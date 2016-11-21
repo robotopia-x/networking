@@ -10,6 +10,6 @@ app.model(require('./choo/game/')(globalConfig))
 //creates routing, default route = /404
 app.router('/404', require('./choo/routing')(globalConfig))
 
-const appTree = app.start()
+const appTree = app.start({hash: true})
 
 document.body.appendChild(appTree)

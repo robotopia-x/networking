@@ -48,6 +48,9 @@ var miniGame
 
   function Challenge (dimensions) {
     var grid, correctPosition, usableColors, startTime, stopTime, mistakes, finishHandler
+    finishHandler = function () {
+      console.log('no callback assigned.')
+    }
     mistakes = 0
     grid = []
     usableColors = {}

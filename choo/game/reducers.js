@@ -1,3 +1,9 @@
 module.exports = function (globalConfig) {
-  return {}
+  return {
+    setGame: setGame
+  }
+}
+
+function setGame(game, state) {
+  state.game = game
 }
