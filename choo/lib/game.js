@@ -107,7 +107,11 @@ function Challenge (dimensions) {
     }
   }
 
-  function handleInput(posX, posY) {
+  function handleInput(data) {
+    var posX, posY
+    posX = data.x
+    posY = data.y
+    console.log('GAME, INPUT: X=' + posX + ", Y=" + posY)
     if (correctPosition.x === posX && correctPosition.y === posY) {
       stopTime = Date.now()
       publishChallengeResult(this, stopTime - startTime, mistakes, finishHandler)
