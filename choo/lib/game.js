@@ -59,8 +59,7 @@ function Challenge (dimensions) {
   return {
     grid: grid,
     handleInput: handleInput,
-    task: createSearchTextForTile(grid[ correctPosition.y ][ correctPosition.x ]),
-    onFinish: onFinish
+    task: createSearchTextForTile(grid[ correctPosition.y ][ correctPosition.x ])
   }
 
   function initColors () {
@@ -114,27 +113,22 @@ function Challenge (dimensions) {
     console.log('GAME, INPUT: X=' + posX + ", Y=" + posY)
     if (correctPosition.x === posX && correctPosition.y === posY) {
       stopTime = Date.now()
-      publishChallengeResult(this, stopTime - startTime, mistakes, finishHandler)
-      return true
+      const result = {
+        challenge: this,
+        time: stopTime - startTime,
+        mistakes: mistakes
+      }
+      logChallengeResult(result.time, result.mistakes)
+      return result
     } else {
       mistakes++
-      return false
+      return null
     }
-  }
-
-  function onFinish(handler) {
-    finishHandler = handler
   }
 }
 
-function publishChallengeResult(challenge, solvingTime, mistakes, callback) {
+function logChallengeResult(solvingTime, mistakes) {
   console.log("correct after " + solvingTime + " ms and " + mistakes + " mistakes; Adding a penalty of " + (mistakes * config.penalty) + "ms.")
-  var result = {
-    challenge: challenge,
-    time: solvingTime,
-    mistakes: mistakes
-  }
-  callback(result)
 }
 
 function Tile (text, textColor, backgroundColor) {

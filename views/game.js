@@ -56,11 +56,8 @@ module.exports = function (prefix) {
   
   function htmlGrid(state, prev, send) {
     return html`
-    ${displayGrid(state[id].game, sendWrapper)}
+    ${displayGrid(state[id].game, send)}
 `
-    function sendWrapper(target, data) {
-      send(prefix + target, data);
-    }
 
   }
 

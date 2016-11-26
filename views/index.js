@@ -1,22 +1,20 @@
 const html = require('choo/html')
-const game = require('./game')
+const gameView = require('./game')
 //const sf = require('sheetify')
 //sf('css/game.css', {global: true})
 
 
-var localGameView = game('local');
-var remoteGameView = game('remote');
+var localGameView = gameView('local')
+var remoteGameView = gameView('remote')
 
-function newGame(send) {
-  send('localgame:newGame', onFinish)
-  
-  function onFinish(result) {
-    console.log('send me pls')
+function createPrefixSend(regularSend, prefix) {
+  return function (target, data) {
+    regularSend(prefix + target, data);
   }
-  
 }
 
 module.exports = function (globalConfig) {
+
   return function (state, prev, send) {
 
     return html`
@@ -31,13 +29,27 @@ module.exports = function (globalConfig) {
                 <h3>Local View</h3>
             </div>
             <div class="row">
-                <button id="localRestartButton" onclick=${(e) => newGame(send)}>Restart</button>
+                <button onclick=${(e) => send('localgame:newGame')}>Restart</button>
             </div>
             <div class="row">
-                ${localGameView.htmlTask(state, prev, send)}
+                ${localGameView.htmlTask(state, prev, createPrefixSend(send, 'local'))}
             </div>
             <div class="row">
-                ${localGameView.htmlGrid(state, prev, send)}
+                ${localGameView.htmlGrid(state, prev, createPrefixSend(send, 'local'))}
+            </div>
+        </div>
+        <div class="split_side">
+            <div class="row">
+                <h3>Remote View</h3>
+            </div>
+            <div class="row">
+                <button onclick=${(e) => send('remotegame:newGame')}>Restart</button>
+            </div>
+            <div class="row">
+                ${remoteGameView.htmlTask(state, prev, createPrefixSend(send, 'remote'))}
+            </div>
+            <div class="row">
+                ${remoteGameView.htmlGrid(state, prev, createPrefixSend(send, 'remote'))}
             </div>
         </div>
     </div>
