@@ -1,10 +1,10 @@
-module.exports = function (globalConfig) {
+module.exports = function (prefix) {
   return {
-    namespace: 'game',
+    namespace: prefix+'game',
     state: {
       game: null
     },
-    effects: require('./effects')(globalConfig),
-    reducers: require('./reducers')(globalConfig)
+    effects: require('./effects')(prefix),
+    reducers: require('./reducers')(prefix)
   }
 }

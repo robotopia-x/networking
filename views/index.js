@@ -3,11 +3,12 @@ const game = require('./game')
 //const sf = require('sheetify')
 //sf('css/game.css', {global: true})
 
-var localGame = game('');
-//var localGame = game('remote');
+
+var localGameView = game('local');
+var remoteGameView = game('remote');
 
 function newGame(send) {
-  send('game:newGame', onFinish)
+  send('localgame:newGame', onFinish)
   
   function onFinish(result) {
     console.log('send me pls')
@@ -33,10 +34,10 @@ module.exports = function (globalConfig) {
                 <button id="localRestartButton" onclick=${(e) => newGame(send)}>Restart</button>
             </div>
             <div class="row">
-                ${localGame.htmlTask(state, prev, send)}
+                ${localGameView.htmlTask(state, prev, send)}
             </div>
             <div class="row">
-                ${localGame.htmlGrid(state, prev, send)}
+                ${localGameView.htmlGrid(state, prev, send)}
             </div>
         </div>
     </div>

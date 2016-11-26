@@ -1,4 +1,4 @@
-module.exports = function (globalConfig) {
+module.exports = function (prefix) {
   return {
     setGame: setGame
   }
