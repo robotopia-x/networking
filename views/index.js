@@ -1,45 +1,10 @@
 const html = require('choo/html')
+const game = require('./game')
 //const sf = require('sheetify')
 //sf('css/game.css', {global: true})
 
-function displayTask(game) {
-  return game ? game.task : ""
-}
-
-function displayGrid(game, send) {
-  if (!game) {
-    return html`<div>No game in progress</div>`
-  }
-  return html`
-    <div class="game_div">
-        ${game.grid.map(displayRow)}
-    </div>
-  `
-
-  function displayRow(row, index_y) {
-    return html`
-      <div class="game_row">
-        ${row.map(function (tile, index_x) {
-      return html`<div 
-class="game_tile" 
-style="background-color: ${tile.backgroundColor.background}; 
-                  color: ${tile.fontColor.font};
-                  width: ${(100/row.length)}%"
-onclick=${(e) => send('game:guessTile', {x: index_x, y: index_y})}>
-    <div class="game_tile_text_container">
-        <p>${tile.text.name}</p>
-     </div>
-</div>`
-    })}
-    </div>
-  `
-  }
-
-  function tileClicked(x, y) {
-    //send('game:guessTile', {x: ${index_x}, y: ${index_y}})
-  }
-
-}
+var localGame = game('');
+//var localGame = game('remote');
 
 function newGame(send) {
   send('game:newGame', onFinish)
@@ -66,12 +31,12 @@ module.exports = function (globalConfig) {
             </div>
             <div class="row">
                 <button id="localRestartButton" onclick=${(e) => newGame(send)}>Restart</button>
-    </div>
-    <div class="row">
-                <span id="localTaskSpan">Task: ${displayTask(state.game.game)}</span>
             </div>
             <div class="row">
-                ${displayGrid(state.game.game, send)}
+                ${localGame.htmlTask(state, prev, send)}
+            </div>
+            <div class="row">
+                ${localGame.htmlGrid(state, prev, send)}
             </div>
         </div>
     </div>
