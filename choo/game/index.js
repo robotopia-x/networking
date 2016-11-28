@@ -1,6 +1,6 @@
 module.exports = function (prefix) {
   return {
-    namespace: prefix+'game',
+    namespace: prefix + 'game',
     state: {
       game: null
     },

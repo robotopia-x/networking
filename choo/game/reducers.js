@@ -4,6 +4,6 @@ module.exports = function (prefix) {
   }
 }
 
-function setGame(game, state) {
+function setGame (game, state) {
   state.game = game
 }

@@ -40,7 +40,7 @@ function Color (name, hexText, hexBackground) {
 }
 
 function Challenge (dimensions) {
-  var grid, correctPosition, usableColors, startTime, stopTime, mistakes, finishHandler
+  var grid, correctPosition, usableColors, startTime, stopTime, mistakes
   mistakes = 0
   grid = []
   usableColors = {}
@@ -54,7 +54,7 @@ function Challenge (dimensions) {
     y: Math.floor(Math.random() * dimensions.y)
   }
 
-  startTime = Date.now();
+  startTime = Date.now()
 
   return {
     grid: grid,
@@ -106,11 +106,11 @@ function Challenge (dimensions) {
     }
   }
 
-  function handleInput(data) {
+  function handleInput (data) {
     var posX, posY
     posX = data.x
     posY = data.y
-    console.log('GAME, INPUT: X=' + posX + ", Y=" + posY)
+    console.log('GAME, INPUT: X=' + posX + ', Y=' + posY)
     if (correctPosition.x === posX && correctPosition.y === posY) {
       stopTime = Date.now()
       const result = {
@@ -127,8 +127,8 @@ function Challenge (dimensions) {
   }
 }
 
-function logChallengeResult(solvingTime, mistakes) {
-  console.log("correct after " + solvingTime + " ms and " + mistakes + " mistakes; Adding a penalty of " + (mistakes * config.penalty) + "ms.")
+function logChallengeResult (solvingTime, mistakes) {
+  console.log('correct after ' + solvingTime + ' ms and ' + mistakes + ' mistakes; Adding a penalty of ' + (mistakes * config.penalty) + 'ms.')
 }
 
 function Tile (text, textColor, backgroundColor) {
@@ -159,22 +159,18 @@ function Tile (text, textColor, backgroundColor) {
 }
 
 function createSearchTextForTile (tile) {
-  var fields, randomIndex, color, type
+  var fields, randomIndex
   fields = [ 'text', 'fontColor', 'backgroundColor' ]
   randomIndex = Math.floor(Math.random() * fields.length)
   switch (fields[ randomIndex ]) {
     case 'text':
       return 'Find the tile with the text: "' + tile.text.name + '"'
-      break
     case 'fontColor':
       return 'Find the tile with the ' + tile.fontColor.name + ' text'
-      break
     case 'backgroundColor':
       return 'Find the tile with the ' + tile.backgroundColor.name + ' background'
-      break
     default:
       return 'Illegal Field'
-      break
   }
 }
 
@@ -187,7 +183,7 @@ function init () {
   addColor(new Color('Teal', '#00FFFF', '#00CCCC'))
 }
 
-init();
+init()
 
 module.exports = {
   createNewChallenge: createNewChallenge

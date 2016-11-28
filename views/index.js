@@ -1,22 +1,20 @@
 const html = require('choo/html')
 const gameView = require('./game')
-//const sf = require('sheetify')
-//sf('css/game.css', {global: true})
+// const sf = require('sheetify')
+// sf('css/game.css', {global: true})
 
 
 var localGameView = gameView('local')
 var remoteGameView = gameView('remote')
 
-function createPrefixSend(regularSend, prefix) {
+function createPrefixSend (regularSend, prefix) {
   return function (target, data) {
-    regularSend(prefix + target, data);
+    regularSend(prefix + target, data)
   }
 }
 
 module.exports = function (globalConfig) {
-
   return function (state, prev, send) {
-
     return html`
 <div>
     <div class="row">

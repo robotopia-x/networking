@@ -1,4 +1,4 @@
-const sf = require('sheetify')
+// const sf = require('sheetify')
 const html = require('choo/html')
 
 module.exports = function (globalConfig) {
