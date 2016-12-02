@@ -40,7 +40,7 @@ function Color (name, hexText, hexBackground) {
 }
 
 function Challenge (dimensions) {
-  var grid, correctPosition, usableColors, startTime, stopTime, mistakes
+  var grid, correctPosition, usableColors, mistakes
   mistakes = 0
   grid = []
   usableColors = {}
@@ -53,8 +53,6 @@ function Challenge (dimensions) {
     x: Math.floor(Math.random() * dimensions.x),
     y: Math.floor(Math.random() * dimensions.y)
   }
-
-  startTime = Date.now()
 
   return {
     grid: grid,
@@ -111,24 +109,16 @@ function Challenge (dimensions) {
     posX = data.x
     posY = data.y
     console.log('GAME, INPUT: X=' + posX + ', Y=' + posY)
-    if (correctPosition.x === posX && correctPosition.y === posY) {
-      stopTime = Date.now()
-      const result = {
-        challenge: this,
-        time: stopTime - startTime,
-        mistakes: mistakes
-      }
-      logChallengeResult(result.time, result.mistakes)
-      return result
-    } else {
-      mistakes++
-      return null
+    var result = {
+      done: false,
+      mistakes: mistakes,
+      punishmentPerMistakeInMS: config.penalty
     }
+    if (correctPosition.x === posX && correctPosition.y === posY) {
+      result.done = true;
+    }
+    return result;
   }
-}
-
-function logChallengeResult (solvingTime, mistakes) {
-  console.log('correct after ' + solvingTime + ' ms and ' + mistakes + ' mistakes; Adding a penalty of ' + (mistakes * config.penalty) + 'ms.')
 }
 
 function Tile (text, textColor, backgroundColor) {
@@ -175,12 +165,12 @@ function createSearchTextForTile (tile) {
 }
 
 function init () {
-  addColor(new Color('Red', '#FF0000', '#CC0000'))
-  addColor(new Color('Green', '#00FF00', '#00CC00'))
-  addColor(new Color('Blue', '#0000FF', '#0000CC'))
-  addColor(new Color('Yellow', '#FFFF00', '#CCCC00'))
-  addColor(new Color('Pink', '#FF00FF', '#CC00CC'))
-  addColor(new Color('Teal', '#00FFFF', '#00CCCC'))
+  addColor(new Color('Red', '#FF0000', '#AA0000'))
+  addColor(new Color('Green', '#00FF00', '#00AA00'))
+  addColor(new Color('Blue', '#0000FF', '#0000AA'))
+  addColor(new Color('Yellow', '#FFFF00', '#AAAA00'))
+  addColor(new Color('Pink', '#FF00FF', '#AA00AA'))
+  addColor(new Color('Teal', '#00FFFF', '#00AAAA'))
 }
 
 init()

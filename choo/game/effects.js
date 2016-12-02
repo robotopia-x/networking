@@ -6,18 +6,22 @@ module.exports = function (prefix) {
     guessTile: guessTile
   }
 
-  function newGame (_, __, send, done) {
+  function newGame (_, state, send, done) {
     var nextGame = game.createNewChallenge(2, 2)
     send(prefix + 'game:setGame', nextGame, done)
   }
 
   function guessTile (data, state, send, done) {
+    var now = Date.now()
     const result = state.game.handleInput(data)
-    if (result) {
+    if (result.done) {
+      state.timeTaken = ( now - state.start )+ result.punishmentPerMistakeInMS * result.mistakes
+      console.log('Correct after: ' + state.timeTaken + 'ms including ' + result.mistakes + ' mistakes punished by ' + result.punishmentPerMistakeInMS + 'ms each')
+      const resultPackage = {game: state.game, mistakes: result.mistakes, punishmentPerMistakeInMS: result.punishmentPerMistakeInMS}
       if (prefix === 'local') {
-        send('remotegame:setGame', result.challenge, done)
+        send('remotegame:setGame', resultPackage.game, done)
       } else {
-        send('localgame:setGame', result.challenge, done)
+        send('localgame:setGame', resultPackage.game, done)
       }
       newGame(null, null, send, done)
     } else {

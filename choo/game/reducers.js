@@ -6,4 +6,5 @@ module.exports = function (prefix) {
 
 function setGame (game, state) {
   state.game = game
+  state.start = Date.now()
 }
