@@ -1,0 +1,39 @@
+{
+  "name": "networking",
+  "version": "0.0.1",
+  "description": "network",
+  "main": "src/client.js",
+  "dependencies": {
+    "budo": "^9.2.1",
+    "choo": "^3.3.0",
+    "sheetify": "^6.0.1",
+    "simple-peer": "^6.1.0",
+    "socket.io": "^1.7.1",
+    "webrtc-swarm": "^2.8.0"
+  },
+  "standard": {
+    "ignore": [
+      "**/bootstrap/",
+      "adapter.js"
+    ]
+  },
+  "devDependencies": {
+    "budo": "^9.2.1",
+    "standard": "^8.5.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "standard": "standard",
+    "start": "budo index.js --port 8081 -P --live --live-port 35730 --host localhost"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hdm-project/networking.git"
+  },
+  "author": "H3rby7",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hdm-project/networking/issues"
+  },
+  "homepage": "https://github.com/hdm-project/networking"
+}

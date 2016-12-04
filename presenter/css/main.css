@@ -1,0 +1,16 @@
+body {
+  overflow: hidden;
+}
+
+.row {
+  width: 100%;
+}
+
+.split_side {
+  border-right: 3px solid #DDDDDD;
+  width: 50%;
+  float: left;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 2em;
+}
