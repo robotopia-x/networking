@@ -9,6 +9,7 @@
     "sheetify": "^6.0.1",
     "simple-peer": "^6.1.0",
     "socket.io": "^1.7.1",
+    "signalhub": "^4.8.0",
     "webrtc-swarm": "^2.8.0"
   },
   "standard": {
@@ -19,7 +20,6 @@
   },
   "devDependencies": {
     "budo": "^9.2.1",
-    "signalhub": "^4.8.0",
     "standard": "^8.5.0"
   },
   "scripts": {

@@ -2,10 +2,11 @@ const choo = require('choo')
 const app = choo()
 
 var globalConfig = {
-  signalhubUrl: 'http://localhost:8042'
+  signalhubUrl: 'http://localhost:8042',
+  appName: 'presenter'
 }
 
-//app.model(require('./choo/P2PConnection')(globalConfig))
+app.model(require('./choo/P2PConnection')(globalConfig))
 
 // creates routing, default route = /404
 app.router('/404', require('./choo/routing')(globalConfig))
@@ -13,27 +14,3 @@ app.router('/404', require('./choo/routing')(globalConfig))
 const appTree = app.start({hash: true})
 
 document.body.appendChild(appTree)
-
-var Peer = require('simple-peer')
-var p = new Peer({ initiator: location.hash === '#1', trickle: false })
-
-p.on('error', function (err) { console.log('error', err) })
-
-p.on('signal', function (data) {
-  console.log('SIGNAL', JSON.stringify(data))
-  document.querySelector('#outgoing').textContent = JSON.stringify(data)
-})
-
-document.querySelector('form').addEventListener('submit', function (ev) {
-  ev.preventDefault()
-  p.signal(JSON.parse(document.querySelector('#incoming').value))
-})
-
-p.on('connect', function () {
-  console.log('CONNECT')
-  p.send('whatever' + Math.random())
-})
-
-p.on('data', function (data) {
-  console.log('data: ' + data)
-})
