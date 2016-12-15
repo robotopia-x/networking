@@ -1,6 +1,0 @@
-# IntelliJ
-*.iml
-.idea/
-
-# npm
-node_modules/
