@@ -14,7 +14,6 @@ const TYPES = {
   ACCEPTCID: 'acceptCID'
 }
 
-
 function PeerStar (opts) {
   if (!opts) {
     throw new Error('Please pass an opts object with GID and hubURL!')
@@ -27,8 +26,6 @@ function PeerStar (opts) {
   }
 
   var self = this
-  self.send = send;
-  self.onMessage = onMessageLog
   
   var hubURL, GID, CID, Contacts, Swarms
   
