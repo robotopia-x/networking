@@ -87,32 +87,39 @@ function PeerStar (opts) {
     })
 
     function dataRouting(data) {
-      if (!data.hasOwnProperty('Type')) {
-        console.log('data event without type: ' + JSON.stringify(data))
+      try {
+        var stuff = JSON.parse(String(data))
+      } catch (err) {
+        console.log(err)
+      }
+      if (!stuff.hasOwnProperty('Type')) {
+        console.log('data event without type: ' + JSON.stringify(stuff))
         return
       }
-      if (data.Type === TYPES.EXTERNAL) {
-        console.log('data event for user: ' + JSON.stringify(data))
+      if (stuff.Type === TYPES.EXTERNAL) {
+        console.log('data event for user: ' + JSON.stringify(stuff))
         return
       }
-      if (data.Type === TYPES.CONTACTS) {
-        processAsContactData(data, peer)
+      if (stuff.Type === TYPES.CONTACTS) {
+        processAsContactData(stuff, peer)
         return
       }
-      if (data.Type === TYPES.NEWCID) {
-        processAsNewCID(data, peer)
+      if (stuff.Type === TYPES.NEWCID) {
+        processAsNewCID(stuff, peer)
         return
       }
-      if (data.Type === TYPES.DENYCID) {
+      if (stuff.Type === TYPES.DENYCID) {
         CID = 0
-        processAsContactData(data, peer)
+        console.log('CID was rejected')
+        processAsContactData(stuff, peer)
         return
       }
-      if (data.Type === TYPES.ACCEPTCID) {
+      if (stuff.Type === TYPES.ACCEPTCID) {
+        console.log('CID was accepted')
         Swarms.self = createSwarmForCID(CID)
         return
       }
-      console.log('data Type unknown: ' + data.Type)
+      console.log('data Type unknown: ' + stuff.Type)
     }
 
   }
@@ -153,7 +160,7 @@ function PeerStar (opts) {
   }
 
   function createSwarmForCID(targetCID) {
-    console.log(GID + targetCID)
+    console.log('Creating Swarm for: ' + GID + targetCID)
     var hub = signalhub(GID + targetCID, hubURL)
     var swarm = webrtcSwarm(hub)
     return swarm
@@ -163,11 +170,11 @@ function PeerStar (opts) {
     if (!Type) {
       Type = 'none'
     }
-    return {
+    return JSON.stringify({
       Origin: CID,
       Type: Type,
       Data: Data
-    }
+    })
   }
 
   startUp()
