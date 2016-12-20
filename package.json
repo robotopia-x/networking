@@ -4,20 +4,22 @@
   "description": "network",
   "main": "index.js",
   "dependencies": {
-    "simple-peer": "^6.1.0",
     "signalhub": "^4.8.0",
-    "webrtc-swarm": "^2.8.0",
-    "cuid": "^1.3.8"
+    "simple-peer": "^6.1.0",
+    "webrtc-swarm": "^2.8.0"
   },
   "standard": {
     "ignore": []
   },
   "devDependencies": {
+    "budo": "^9.3.0",
+    "cuid": "^1.3.8",
     "standard": "^8.5.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "standard": "standard",
+    "start": "budo index.js --port 8080 -P --live --host localhost",
     "devhub": "signalhub listen -p 8042"
   },
   "repository": {
