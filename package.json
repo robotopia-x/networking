@@ -9,7 +9,10 @@
     "webrtc-swarm": "^2.8.0"
   },
   "standard": {
-    "ignore": []
+    "ignore": [
+      "node_modules/",
+      "networking.wiki/"
+    ]
   },
   "devDependencies": {
     "budo": "^9.3.0",
