@@ -19,8 +19,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "standard": "standard",
-    "start": "budo index.js --port 8080 -P --live --host localhost",
-    "devhub": "signalhub listen -p 8042"
+    "start": "npm run l_signalhub | npm run l_example",
+    "l_signalhub": "signalhub listen -p 8042",
+    "l_example": "budo index.js --port 8080 -P --live --host localhost"
   },
   "repository": {
     "type": "git",
