@@ -2,7 +2,7 @@
   "name": "peer-star",
   "version": "0.0.1",
   "description": "network",
-  "main": "index.js",
+  "main": "lib/Index.js",
   "dependencies": {
     "signalhub": "^4.8.0",
     "simple-peer": "^6.1.0",
