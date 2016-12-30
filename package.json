@@ -6,6 +6,7 @@
   "dependencies": {
     "signalhub": "^4.8.0",
     "simple-peer": "^6.1.0",
+    "vis": "^4.17.0",
     "webrtc-swarm": "^2.8.0"
   },
   "standard": {
