@@ -1,8 +1,9 @@
 var ps = require('./lib/index.js')
+var vis = require('vis')
 var hub = 'http://localhost:8042'
 var stars = {}
 
-localStorage.debug = "peer-star"
+localStorage.debug = 'peer-star' // eslint-disable-line
 
 window.buttonMain = function () {
   if (!stars.main) {
@@ -52,16 +53,12 @@ window.buttonClient = function () {
   }
 }
 
-var nodes = new vis.DataSet({});
-
-// create an array with edges
-var edges = new vis.DataSet({});
-
-// create a network
-var container = document.getElementById('visualization');
+var nodes = new vis.DataSet({}) // eslint-disable-line no-new-object
+var edges = new vis.DataSet({}) // eslint-disable-line no-new-object
+var container = document.getElementById('visualization')
 var data = {
   nodes: nodes,
   edges: edges
-};
-var options = {};
-var network = new vis.Network(container, data, options);
+}
+var options = {}
+var network = new vis.Network(container, data, options) // eslint-disable-line
