@@ -11,6 +11,7 @@ const ps = require('peer-star')
 var opts = {}
 opts.GID = 'myStarGroup' //required, all ps instances with this name will form a star
 opts.hubURL = 'localhost:8042' //required. point to your Signalling Hub
+opts.isMain = true //Set this flag for the center of your star. Make sure to only have one MAIN!
 var star = ps(opts)
 ```
 
