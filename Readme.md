@@ -5,7 +5,7 @@ Basically a modified version of [WebRTCSwarm](https://github.com/mafintosh/webrt
 
 Include Repo in your package.json eg.:  
 `"peer-star": "git://github.com/hdm-project/networking.git/#9b708f0e3ad998215342fc381ecef166c87dff7d"`  
-(you can leave out the '#' and the following characters. The define the commit to be used in your application.  
+(you can leave out the '#' and the following characters. That part defines the commit of the repo to be used in your application.  
 ```js
 const ps = require('peer-star')
 var opts = {}
